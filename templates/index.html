@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../static/easyqosstyle.css">
+    <title> EasyQoS - Demo Automation </title>
+</head>
+<body>
+
+    <div id="buttonsDiv">
+        <p>
+            <h2> Start APIC Demo Video Stream </h2>
+            <button id="startVideoButton" onclick="startVideoFunction()"> Start Video </button>
+        </p>
+    <p>
+        <h2> Stop APIC Demo Video Stream </h2>
+        <button  id="stopVideoButton" onclick="stopVideoFunction()"> Stop Video </button>
+    </p>
+
+    </div>
+
+    <div id="actioResults">
+        <br> Results from Scripting Server seen below: </br>
+    </div>
+
+    <script>
+
+        startVideoFunction()
+        {
+                actionPost = {"action": "start-video"};
+                actionAjax(actionPost);
+
+        };
+        stopVideoFunction()
+        {
+
+                actionPost = {"action": "start-video"};
+                actionAjax(actionPost);
+        };
+        var url = "http://127.0.0.1:8083/videoaction";
+
+        JSON.stringify(actionPost);
+
+        console.log(actionPost);
+
+        function actionAjax(actionPost) {
+
+            /* ajax call to flask webserver */
+
+            $.ajax({url: url,
+                type: 'post',
+                dataType: 'json',
+                data: actionPost,
+                success: function(results){
+                    // Flask server return arbitrary json formatted response, printed below
+                    $('#actionResults').append('<p>' + 'The following was received from ' + url + ' : ' + results +'</p>') }
+
+            });
+
+        }
+
+    </script>
+
+
+
+</body>
+</html>
