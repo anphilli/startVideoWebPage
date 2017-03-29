@@ -11,54 +11,53 @@
     <div id="buttonsDiv">
         <p>
             <h2> Start APIC Demo Video Stream </h2>
-            <button id="startVideoButton" onclick="startVideoFunction()"> Start Video </button>
+            <button id="startVideoButton" > Start Video </button>
         </p>
     <p>
         <h2> Stop APIC Demo Video Stream </h2>
-        <button  id="stopVideoButton" onclick="stopVideoFunction()"> Stop Video </button>
+        <button id="stopVideoButton" > Stop Video </button>
     </p>
 
     </div>
 
-    <div id="actioResults">
-        <br> Results from Scripting Server seen below: </br>
+    <div id="actionResults">
+        <br> Results from Scripting Server seen below:
     </div>
 
     <script>
 
-        startVideoFunction()
-        {
-                actionPost = {"action": "start-video"};
-                actionAjax(actionPost);
-
-        };
-        stopVideoFunction()
-        {
-
-                actionPost = {"action": "start-video"};
-                actionAjax(actionPost);
-        };
-        var url = "http://127.0.0.1:8083/videoaction";
-
-        JSON.stringify(actionPost);
-
-        console.log(actionPost);
-
-        function actionAjax(actionPost) {
-
-            /* ajax call to flask webserver */
-
-            $.ajax({url: url,
-                type: 'post',
-                dataType: 'json',
-                data: actionPost,
-                success: function(results){
-                    // Flask server return arbitrary json formatted response, printed below
-                    $('#actionResults').append('<p>' + 'The following was received from ' + url + ' : ' + results +'</p>') }
+            $("#startVideoButton").click(function() {
+                var actionPost =  '{ "action" : "start-video" }';
+                jsonActionPost = JSON.parse(actionPost);
+                actionAjax(jsonActionPost);
 
             });
 
-        }
+            $("#stopVideoButton").click(function() {
+                var actionPost =  '{ "action" : "stop-video" }';
+                jsonActionPost = JSON.parse(actionPost);
+                actionAjax(jsonActionPost);
+            });
+
+            var url = "http://127.0.0.1:8083/videoaction";
+
+
+            function actionAjax(actionPost) {
+
+                /* ajax call to flask webserver */
+
+                $.ajax({url: url,
+                    type: 'post',
+                    dataType: 'json',
+                    data: jsonActionPost,
+                    success: function(results){
+                        // Flask server return arbitrary json formatted response, printed below
+                        $('#actionResults').append('<p>' + results.message +'</p>') }
+
+                });
+
+            }
+
 
     </script>
 

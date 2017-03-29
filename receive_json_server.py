@@ -16,11 +16,18 @@ def main_page():
 def receive_video_action():
 
     print('You are here!!')
-    payload = (request.form)
+    payload = request.form
 
-    print(payload)
+    action = payload['action']
 
-    resp = json.dumps(payload)
+    if action == 'start-video':
+    	returnmessage =  {'message' : 'Starting Video Stream'}
+    	print(action)
+    elif action == 'stop-video':
+    	returnmessage =  {'message' : 'Stopping Video Stream'}
+    	print(action)
+
+    resp = json.dumps(returnmessage)
     return Response(resp, status=200, mimetype='application/json')
 
 
