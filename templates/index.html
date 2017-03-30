@@ -17,11 +17,20 @@
         <h2> Stop APIC Demo Video Stream </h2>
         <button id="stopVideoButton" > Stop Video </button>
     </p>
+    <p>
+        <h2> Clear Output </h2>
+        <button id="clearButton" > Clear Output </button>
+    </p>
+
 
     </div>
 
+    <div id="label">
+        <h2> Results from Service: </h2>
+    </div>
+
     <div id="actionResults">
-        <br> Results from Scripting Server seen below:
+
     </div>
 
     <script>
@@ -41,23 +50,28 @@
 
             var url = "http://127.0.0.1:8083/videoaction";
 
-
-            function actionAjax(actionPost) {
+            function actionAjax(jsonActionPost) {
 
                 /* ajax call to flask webserver */
 
                 $.ajax({url: url,
                     type: 'post',
+                    crossDomain: false,
                     dataType: 'json',
                     data: jsonActionPost,
                     success: function(results){
                         // Flask server return arbitrary json formatted response, printed below
-                        $('#actionResults').append('<p>' + results.message +'</p>') }
+                        $('#actionResults').append('<p>' + results.message + '</p>') }
 
                 });
 
             }
 
+            $(document).ready(function() {
+                $("#clearButton").click(function(){
+                    $('#actionResults').empty()
+                });
+            });
 
     </script>
 

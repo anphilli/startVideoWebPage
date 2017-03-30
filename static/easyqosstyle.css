@@ -1,4 +1,9 @@
+body h2 {
+    color:"blue"
+}
+
 button {
+
     background-color: #5a84cc;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -16,4 +21,12 @@ button:hover {
     background:lightblue;
     box-shadow: 0px 0px 1px #777;
 }
+
+#actionResults {
+    color:#5a84cc;
+    font-family:Verdana, Arial, sans-serif;
+    font-size:16px;
+    display: inline;
+}
+
 
