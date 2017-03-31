@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <div id="buttonsDiv">
+    <div id="buttonsDiv" >
         <p>
             <h2> Start APIC Demo Video Stream </h2>
             <button id="startVideoButton" > Start Video </button>
@@ -29,20 +29,29 @@
         <h2> Results from Service: </h2>
     </div>
 
-    <div id="actionResults">
+    <div id="actionResults"></div>
 
-    </div>
+    <div class="modal"><!-- Place at bottom of page --></div>
 
     <script>
 
-            $("#startVideoButton").click(function() {
+
+        $body = $("body");
+
+        $(document).on({
+            ajaxStart: function() { $body.addClass("loading");    },
+            ajaxStop: function() { $body.removeClass("loading"); }
+        });
+
+
+        $("#startVideoButton").click(function(jsonActionPost) {
                 var actionPost =  '{ "action" : "start-video" }';
                 jsonActionPost = JSON.parse(actionPost);
                 actionAjax(jsonActionPost);
 
             });
 
-            $("#stopVideoButton").click(function() {
+            $("#stopVideoButton").click(function(jsonActionPost) {
                 var actionPost =  '{ "action" : "stop-video" }';
                 jsonActionPost = JSON.parse(actionPost);
                 actionAjax(jsonActionPost);
@@ -54,7 +63,14 @@
 
                 /* ajax call to flask webserver */
 
-                $.ajax({url: url,
+                $(document).ajaxStart(function() {
+                    $(document.body).css({'cursor' : 'wait'});
+                }).ajaxStop(function() {
+                    $(document.body).css({'cursor' : 'default'});
+                });
+
+                $.ajax({
+                    url: url,
                     type: 'post',
                     crossDomain: false,
                     dataType: 'json',
@@ -64,6 +80,7 @@
                         $('#actionResults').append('<p>' + results.message + '</p>') }
 
                 });
+
 
             }
 
