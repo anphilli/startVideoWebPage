@@ -31,7 +31,7 @@
 
     <div id="actionResults"></div>
 
-    <div class="modal"><!-- Place at bottom of page --></div>
+    <div class="modal"> <!-- Loader class div --> </div>
 
     <script>
 
@@ -76,7 +76,7 @@
                     dataType: 'json',
                     data: jsonActionPost,
                     success: function(results){
-                        // Flask server return arbitrary json formatted response, printed below
+                        // Flask server return current state of video stream
                         $('#actionResults').append('<p>' + results.message + '</p>') }
 
                 });
